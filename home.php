@@ -9,6 +9,7 @@ if (isset($_SESSION['name'])) {
 
 
 if (isset($_COOKIE['name'])) {
+
     echo $_COOKIE['name'];
 }
 
