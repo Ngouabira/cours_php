@@ -13,14 +13,17 @@
     <div class="container">
         <h1 class="text-center">Ajouter un produit</h1>
         <?php
+        //Les informations de connexion à la base de données
         $host = "localhost";
         $username = "root";
         $password = "";
         $dbname = "crud_php";
         $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
 
+        //Message de succès
         $message = "";
 
+        //Si le formulaire est soumis
         if (isset($_POST['enregister'])) {
             $libelle = $_POST['libelle'];
             $prix = $_POST['prix'];
@@ -29,7 +32,11 @@
 
             $sql = "INSERT INTO produit (libelle, prix, photo) VALUES ('$libelle', '$prix', '$photo')";
             $pdo->query($sql);
+
+            //Déplacement de la photo dans le dossier images
             move_uploaded_file($photo_tmp, "images/" . $photo);
+
+            //Message de succès
             $message = "Produit enregistré avec succès";
         }
 
@@ -41,7 +48,10 @@
             </div>
         <?php endif; ?>
 
+        <!-- Retour à la liste des produits -->
         <a href="/produit/index.php" class="btn btn-primary">Retourner à la liste</a>
+
+        <!-- Formulaire pour ajouter un produit -->
         <form action="create.php" method="post" class="mt-3" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="libelle">Libellé</label>
@@ -60,6 +70,7 @@
 
     </div>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

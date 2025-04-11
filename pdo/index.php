@@ -13,11 +13,14 @@
     <div class="container">
         <h1 class="text-center">Liste des personnes</h1>
         <?php
+        //Les informations de connexion à la base de données
         $host = "localhost";
         $username = "root";
         $password = "";
         $dbname = "crud_php";
         $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+
+        //Requête SQL pour récupérer toutes les personnes
         $sql = "SELECT * FROM personne";
         $result = $pdo->query($sql);
         ?>
@@ -29,13 +32,16 @@
                 <th>Date de naissance</th>
                 <th>Action</th>
             </tr>
+            <!-- Affichage des personnes -->
             <?php while ($row = $result->fetch()): ?>
                 <tr>
                     <td><?php echo $row['nom']; ?></td>
                     <td><?php echo $row['genre']; ?></td>
                     <td><?php echo date('d/m/Y', strtotime($row['date_naissance'])); ?></td>
                     <td>
+                        <!-- Lien pour modifier une personne -->
                         <a href="/pdo/edit.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-warning">Modifier</a>
+                        <!-- Lien pour supprimer une personne -->
                         <a href="/pdo/delete.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-danger">Supprimer</a>
                     </td>
                 </tr>

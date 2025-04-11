@@ -11,61 +11,67 @@
 
 <body>
     <div class="container">
-        <h1 class="text-center">Modifier une personne</h1>
+        <h1 class="text-center">Ajouter une personne</h1>
         <?php
+        //Les informations de connexion à la base de données
         $host = "localhost";
         $username = "root";
         $password = "";
         $dbname = "crud_php";
         $conn = mysqli_connect($host, $username, $password, $dbname);
 
-        $id = $_GET['id'];
-        $sql = "SELECT * FROM personne WHERE id = $id";
-        $result = mysqli_query($conn, $sql);
-        $person = mysqli_fetch_assoc($result);
-
+        //Message de succès
         $message = "";
 
-        if (isset($_POST['modifier'])) {
+        //Si le formulaire est soumis
+        if (isset($_POST['enregister'])) {
             $nom = $_POST['nom'];
             $genre = $_POST['genre'];
             $date_naissance = $_POST['date_naissance'];
 
-            $sql = "UPDATE personne SET nom = '$nom', genre = '$genre', date_naissance = '$date_naissance' WHERE id = $id";
+            //Requête SQL pour insérer les données dans la table personne
+            $sql = "INSERT INTO personne (nom, genre, date_naissance) VALUES ('$nom', '$genre', '$date_naissance')";
             mysqli_query($conn, $sql);
-            header("Location: /crud/index.php");
+
+            //Message de succès
+            $message = "Personne enregistrée avec succès";
         }
 
         ?>
         <?php if ($message != ""): ?>
+            <!-- Message de succès -->
             <div class="alert alert-success d-flex justify-content-center">
                 <?php echo $message; ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif; ?>
 
+        <!-- Retour à la liste des personnes -->
         <a href="/crud/index.php" class="btn btn-primary">Retourner à la liste</a>
-        <form action="edit.php?id=<?= $id; ?>" method="post" class="mt-3">
+
+        <!-- Formulaire pour ajouter une personne -->
+        <form action="create.php" method="post" class="mt-3">
             <div class="form-group">
                 <label for="nom">Nom</label>
-                <input value="<?= $person['nom']; ?>" required type="text" class="form-control" id="nom" name="nom">
+                <input required type="text" class="form-control" id="nom" name="nom">
             </div>
             <div class="form-group">
                 <label for="genre">Genre</label>
                 <select required class="form-control" id="genre" name="genre">
-                    <option <?= $person['genre'] == 'M' ? 'selected' : ''; ?> value="M">Masculin</option>
-                    <option <?= $person['genre'] == 'F' ? 'selected' : ''; ?> value="F">Féminin</option>
+                    <option value="M">Masculin</option>
+                    <option value="F">Féminin</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="date_naissance">Date de naissance</label>
-                <input value="<?= $person['date_naissance']; ?>" required type="date" class="form-control" id="date_naissance" name="date_naissance">
+                <input required type="date" class="form-control" id="date_naissance" name="date_naissance">
             </div>
-            <button name="modifier" type="submit" class="btn btn-success mt-3">Modifier</button>
+            <button name="enregister" type="submit" class="btn btn-success mt-3">Enregister</button>
         </form>
 
     </div>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

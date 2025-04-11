@@ -13,6 +13,7 @@
     <div class="container">
         <h1 class="text-center">Ajouter une personne</h1>
         <?php
+        //Les informations de connexion à la base de données
         $host = "localhost";
         $username = "root";
         $password = "";
@@ -21,24 +22,30 @@
 
         $message = "";
 
+        //Si le formulaire est soumis
         if (isset($_POST['enregister'])) {
             $nom = $_POST['nom'];
             $genre = $_POST['genre'];
             $date_naissance = $_POST['date_naissance'];
 
+            //Requête SQL pour insérer les données dans la table personne
             $sql = "INSERT INTO personne (nom, genre, date_naissance) VALUES ('$nom', '$genre', '$date_naissance')";
             $pdo->query($sql);
+
+            //Message de succès
             $message = "Personne enregistrée avec succès";
         }
 
         ?>
         <?php if ($message != ""): ?>
+            <!-- Message de succès -->
             <div class="alert alert-success d-flex justify-content-center">
                 <?php echo $message; ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif; ?>
 
+        <!-- Retour à la liste des personnes -->
         <a href="/pdo/index.php" class="btn btn-primary">Retourner à la liste</a>
         <form action="create.php" method="post" class="mt-3">
             <div class="form-group">
@@ -61,6 +68,7 @@
 
     </div>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

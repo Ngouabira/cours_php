@@ -13,38 +13,51 @@
     <div class="container">
         <h1 class="text-center">Modifier une personne</h1>
         <?php
+        //Les informations de connexion à la base de données
         $host = "localhost";
         $username = "root";
         $password = "";
         $dbname = "crud_php";
         $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
 
+        //Récupération de l'id de la personne à modifier
         $id = $_GET['id'];
+
+        //Requête SQL pour récupérer les données de la personne
         $sql = "SELECT * FROM personne WHERE id = $id";
         $result = $pdo->query($sql);
         $person = $result->fetch();
 
+        //Message de succès
         $message = "";
 
+        //Si le formulaire est soumis
         if (isset($_POST['modifier'])) {
             $nom = $_POST['nom'];
             $genre = $_POST['genre'];
             $date_naissance = $_POST['date_naissance'];
 
+            //Requête SQL pour modifier les données de la personne
             $sql = "UPDATE personne SET nom = '$nom', genre = '$genre', date_naissance = '$date_naissance' WHERE id = $id";
             $pdo->query($sql);
+
+            //Redirection vers la page index.php
             header("Location: /pdo/index.php");
         }
 
         ?>
         <?php if ($message != ""): ?>
+            <!-- Message de succès -->
             <div class="alert alert-success d-flex justify-content-center">
                 <?php echo $message; ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif; ?>
 
+        <!-- Retour à la liste des personnes -->
         <a href="/pdo/index.php" class="btn btn-primary">Retourner à la liste</a>
+
+        <!-- Formulaire pour modifier une personne -->
         <form action="edit.php?id=<?= $id; ?>" method="post" class="mt-3">
             <div class="form-group">
                 <label for="nom">Nom</label>
@@ -66,6 +79,7 @@
 
     </div>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

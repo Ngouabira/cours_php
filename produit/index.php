@@ -13,11 +13,14 @@
     <div class="container">
         <h1 class="text-center">Liste des produits</h1>
         <?php
+        //Les informations de connexion à la base de données
         $host = "localhost";
         $username = "root";
         $password = "";
         $dbname = "crud_php";
         $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+
+        //Requête SQL pour récupérer tous les produits
         $sql = "SELECT * FROM produit";
         $result = $pdo->query($sql);
         ?>
@@ -29,6 +32,7 @@
                 <th>Photo</th>
                 <th>Action</th>
             </tr>
+            <!-- Affichage des produits -->
             <?php while ($row = $result->fetch()): ?>
                 <tr>
                     <td><?php echo $row['libelle']; ?></td>
