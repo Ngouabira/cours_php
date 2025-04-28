@@ -11,33 +11,18 @@
 <body>
 
     <?php
-    // include 'navbar.php';
     require 'navbar.php';
-
-    // include_once require_once
     ?>
 
     <?php
 
-    print_r($_SERVER);
-
-    ?>
-
-    <?php
-
-    if (isset($_POST['submit'])) {
-        $error = "";
-        $nom = htmlspecialchars($_POST['nom']);
-        $prenom = htmlspecialchars($_POST['prenom']);
-
-        $photoName = $_FILES['photo']['name'];
-        $photoTmp = $_FILES['photo']['tmp_name'];
-
-        move_uploaded_file($photoTmp, "images/" . $photoName);
+    if (isset($_GET['submit'])) {
+        $nom = $_GET['nom'];
+        $prenom = $_GET['prenom'];
 
         if (empty($nom) || empty($prenom)) {
-            $error = "Veuillez remplir tous les champs";
-            // echo '<p class="text-danger">Veuillez remplir tous les champs </p>';
+
+            echo '<p class="text-danger">Veuillez remplir tous les champs </p>';
         } else {
 
             echo "Bonjour " . $nom . " " . $prenom;
@@ -47,23 +32,8 @@
     ?>
 
 
-    <?php if (isset($error) && !empty($error)):  ?>
 
-
-
-        <div class="col-8 offset-2">
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <?= $error ?>
-                <button type="button" class="close" data-bs-dismiss="alert" aria-bs-label="Close">
-                    <span aria-bs-hidden="true">&times;</span>
-                </button>
-            </div>
-
-        </div>
-    <?php endif;  ?>
-
-
-    <form action="formulaire.php" method="POST" enctype="multipart/form-data">
+    <form action="formulaire.php" method="GET">
 
 
         <div class="col-lg-6 offset-lg-3">
@@ -74,11 +44,6 @@
         <div class="col-lg-6 offset-lg-3">
             <label for="prenom">Prenom</label>
             <input class="form-control" type="text" name="prenom" id="prenom">
-        </div>
-
-        <div class="col-lg-6 offset-lg-3">
-            <label for="prenom">Photo</label>
-            <input class="form-control" type="file" accept="image/*" name="photo" id="photo">
         </div>
 
         <center><button class="btn btn-primary mt-3" name="submit" type="submit">Envoyer</button></center>
